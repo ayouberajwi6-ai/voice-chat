@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voice Chat</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #101018;
+      color: white;
+    }
+
+    header {
+      padding: 20px;
+      text-align: center;
+      background: #191927;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .room {
+      margin: 20px;
+      padding: 20px;
+      background: #1c1c2b;
+      border-radius: 20px;
+    }
+
+    .room h2 {
+      margin-top: 0;
+    }
+
+    .users {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .user {
+      text-align: center;
+      background: #272739;
+      padding: 15px;
+      border-radius: 15px;
+    }
+
+    .avatar {
+      width: 60px;
+      height: 60px;
+      margin: auto;
+      border-radius: 50%;
+      background: #6c5ce7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 25px;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 15px;
+      padding: 15px 22px;
+      color: white;
+      background: #6c5ce7;
+      font-size: 16px;
+    }
+
+    button.mute {
+      background: #e74c3c;
+    }
+
+    #status {
+      text-align: center;
+      margin-top: 20px;
+      color: #aaa;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  🎙️ الشات الصوتي
+</header>
+
+<div class="room">
+
+  <h2>غرفة صوتية</h2>
+
+  <p>المستخدمون في الغرفة</p>
+
+  <div class="users">
+
+    <div class="user">
+      <div class="avatar">👤</div>
+      <p>أنت</p>
+    </div>
+
+    <div class="user">
+      <div class="avatar">👨</div>
+      <p>محمد</p>
+    </div>
+
+    <div class="user">
+      <div class="avatar">👩</div>
+      <p>سارة</p>
+    </div>
+
+  </div>
+
+  <div class="controls">
+
+    <button id="micButton" onclick="toggleMic()">
+      🎤 الميكروفون
+    </button>
+
+    <button onclick="joinRoom()">
+      🔊 دخول الغرفة
+    </button>
+
+  </div>
+
+  <div id="status">
+    الميكروفون غير مفعل
+  </div>
+
+</div>
+
+<script>
+
+let micOn = false;
+
+async function toggleMic() {
+
+  if (!micOn) {
+
+    try {
+
+      await navigator.mediaDevices.getUserMedia({
+        audio: true
+      });
+
+      micOn = true;
+
+      document.getElementById("micButton").innerText =
+        "🔇 إيقاف الميكروفون";
+
+      document.getElementById("micButton")
+        .classList.add("mute");
+
+      document.getElementById("status").innerText =
+        "🎙️ الميكروفون يعمل";
+
+    } catch (error) {
+
+      alert("يجب السماح للتطبيق باستخدام الميكروفون");
+
+    }
+
+  } else {
+
+    micOn = false;
+
+    document.getElementById("micButton").innerText =
+      "🎤 الميكروفون";
+
+    document.getElementById("micButton")
+      .classList.remove("mute");
+
+    document.getElementById("status").innerText =
+      "الميكروفون غير مفعل";
+  }
+}
+
+function joinRoom() {
+
+  document.getElementById("status").innerText =
+    "🔊 دخلت الغرفة الصوتية";
+
+}
+
+</script>
+
+</body>
+</html>
